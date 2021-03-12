@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Scrapping</title>
+    <style>
+        .wrap {
+            margin-top: 120px;
+        }
+        
+        h1 {
+            font-size: 48px;
+        }
+        
+        .form {
+            width: 50%;
+            height: 45px;
+            padding: 0px;
+            margin: 30px auto;
+        }
+        
+        input {
+            width: 75%;
+            font-size: 16px;
+            height: 40px;
+            float: left;
+            border-radius: 25px 0px 0px 25px;
+            outline: none;
+            border: 1px solid grey;
+            padding-left: 15px;
+            box-sizing: border-box;
+        }
+        
+        button {
+            width: 23%;
+            margin-top: 0px;
+            margin-left: 0px;
+            margin-right: 0px;
+            height: 40px;
+            box-sizing: border-box;
+            border-radius: 0px 25px 25px 0px;
+            outline: none;
+            border: 1px solid grey;
+        }
+        
+        .result {
+            width: 50%;
+            min-height: 100px;
+            margin: 0px auto;
+        }
+        
+        .data {
+            padding: 0px 5px 5px 5px;
+            border-bottom: 1px solid gray;
+        }
+        
+        .data p {
+            font-size: 16px;
+            color: gray;
+        }
+        
+        .data h3 {
+            margin-top: -8px;
+            font-size: 20px;
+            color: blue;
+        }
+        
+        .desc {
+            margin-top: -10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="wrap">
+        <h1 style="text-align: center;">WebScrapping</h1>
+        <div class="form">
+            <input type="text" name="keyword" class="keyword" placeholder="Masukan Kata Kunci Pencarian">
+            <button type="submit" name="submit" class="button"> Cari</button>
+        </div>
+    </div>
+    <div class="result">
+        <!-- <div class="data">
+            <p>en.wikipedia.org › wiki › Aku_(poem)</p>
+            <h3>Puisi Aku Chairil Anwar Halaman all - Kompas.com</h3>
+            <div class="desc"> Apr 28, 2020 — Hasil karya penyair Chairil Anwar yang banyak dikenal adalah puisi berjudul Aku, yang membuatnya terkenal dengan sebutan Si Binatang ...</div>
+        </div>` -->
+    </div>
+
+    <script src=" https://code.jquery.com/jquery-3.6.0.min.js " integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin=" anonymous "></script>
+    <script>
+        $('.button').on('click', function() {
+            console.log('button clicked');
+            $.ajax({
+                url: 'http://localhost:3000/search/' + $('.keyword').val(),
+                success: (result) => {
+                    let show = " ";
+                    let results = result.search;
+                    results.forEach(data => {
+                        show += `
+                        <div class=data>
+                             <p>${data.link}</p>
+                             <h3>${data.heading}</h3>
+                            <div class=desc> ${data.desc}</div>
+                        </div>`;
+                    });
+                    $('.result').html(show);
+                    // console.log(results);
+                },
+                error: (err) => {
+                    console.log(err);
+                }
+            });
+        })
+    </script>
+</body>
+
+</html>
